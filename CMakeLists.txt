@@ -5,6 +5,13 @@ if (NOT TARGET jsoncpp-project)
 
 	include(ExternalProject)
 
+	if(CMAKE_C_COMPILER)
+		set(CMAKE_C_COMPILER_OPTION "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}")
+	endif()
+	if(CMAKE_CXX_COMPILER)
+		set(CMAKE_CXX_COMPILER_OPTION "-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}")
+	endif()
+
 	ExternalProject_Add(jsoncpp-project
 		GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
 		GIT_TAG 1.8.3
@@ -14,8 +21,8 @@ if (NOT TARGET jsoncpp-project)
 			# Force the use of the same compiler as used to build the top-level
 			# project. Otherwise, the external project may pick up a different
 			# compiler, which may result in link errors.
-			"-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
-			"-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
+			"${CMAKE_C_COMPILER_OPTION}"
+			"${CMAKE_CXX_COMPILER_OPTION}"
 		# Disable the update step.
 		UPDATE_COMMAND ""
 		# Disable the install step.
