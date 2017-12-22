@@ -11,6 +11,11 @@ if (NOT TARGET jsoncpp-project)
 		CMAKE_ARGS
 			# This does not work on MSVC, but may be useful on Linux.
 			-DCMAKE_BUILD_TYPE=Release
+			# Force the use of the same compiler as used to build the top-level
+			# project. Otherwise, the external project may pick up a different
+			# compiler, which may result in link errors.
+			"-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}"
+			"-DCMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER}"
 		# Disable the update step.
 		UPDATE_COMMAND ""
 		# Disable the install step.
